@@ -5,9 +5,25 @@ const password = document.getElementById("password");
 const confirmPassword = document.getElementById("confirm-password");
 const submitBtn = document.getElementById("submit");
 
+const setError = (input, message) => {
+  const formControl = input.parentElement;
+  const errorMessageBox = formControl.querySelector("span");
+  formControl.className = "form-control error";
+  errorMessageBox.innerText = message;
+};
 
+const setSuccess = (input) => {
+  const formControl = input.parentElement;
+  formControl.className = "form-control success";
+};
 
-function checkInputs() {
+const checkEmail = (email) => {
+  const emailFilter =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return emailFilter.test(email);
+};
+
+const checkInputs = () => {
   const usernameValue = userName.value.trim();
   const emailValue = email.value.trim();
   const passwordValue = password.value.trim();
@@ -19,44 +35,26 @@ function checkInputs() {
     setSuccess(userName);
   }
 
-  if (!checkEmail(emailValue)) {
-    setError(email, "Email is not valid");
-  } else {
+  if (checkEmail(emailValue)) {
     setSuccess(email);
+  } else {
+    setError(email, "Email is not valid");
   }
 
-  if (passwordValue < 6) {
+  if (passwordValue.length < 6) {
     setError(password, "Password must be at least 6 characters");
   } else {
     setSuccess(password);
   }
 
   if (confirmPasswordValue === "") {
-    setError(confirmPassword, "Password 2 is required");
+    setError(confirmPassword, "Password confirmation is required");
   } else if (passwordValue !== confirmPasswordValue) {
     setError(confirmPassword, "Passwords does not match");
   } else {
     setSuccess(confirmPassword);
   }
-}
-
-function setError(input, message) {
-  const formControl = input.parentElement;
-  const errorMessageBox = formControl.querySelector("span");
-  formControl.className = "form-control error";
-  errorMessageBox.innerText = message;
-}
-
-function setSuccess(input) {
-  const formControl = input.parentElement;
-  formControl.className = "form-control success";
-}
-
-function checkEmail(email) {
-  const emailFilter =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return emailFilter.test(email);
-}
+};
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
