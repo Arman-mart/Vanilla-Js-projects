@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Music Player</title>
+</head>
+<body>
+    <div class="main">
+        <div class="player">
+            <div class="app">
+                <audio src="music/Ukulele.mp3" id="audio"></audio>
+                <h4 class="text">PLAYING NOW</h4>
+                <button class="btn change-theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="btn playlist-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="image">
+                    <img src="images/Ukulele.jpg" id="cover" alt="">
+                </div>
+                <h2 class="song-title">Song name</h2>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+                <div class="control-buttons">
+                    <button class="btn backward">
+                        <i class="fas fa-backward"></i>
+                    </button>
+                    <button class="btn pause">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="btn forward">
+                        <i class="fas fa-forward"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="playlist">
+            <h3 class="playlist-text">PLAYLIST</h3>
+            <ol>
+            </ol>
+        </div>
+    </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
