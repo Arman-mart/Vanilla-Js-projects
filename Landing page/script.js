@@ -3,8 +3,7 @@ const modal = document.querySelector(".modal");
 const modalOverlay = document.querySelector(".modal-overlay");
 const main = document.querySelector(".main");
 const closeButton = document.querySelector(".close-button");
-const menuBtn = document.querySelector(".burger-menu");
-const menuItems = document.getElementById("menu-items")
+const menuBtn = document.querySelector(".menu-button")
 
 logInBtn.addEventListener("click", (event) => {
   event.preventDefault();
@@ -21,15 +20,6 @@ document.addEventListener("click", (event) => {
   }
 });
 
-function toggleMenu() {
-    if (menuItems.classList.contains("show-menu")) {
-      menuItems.classList.remove("show-menu");
-    } else {
-      menuItems.classList.add("show-menu");
-    }
-  }
-
-  menuBtn.addEventListener('click', toggleMenu)
-
-
-
+menuBtn.addEventListener('click', () =>  {
+    document.querySelector('.sidebar-container').classList.toggle("open");
+})
