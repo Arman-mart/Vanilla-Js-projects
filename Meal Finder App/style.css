@@ -168,6 +168,11 @@ h2 {
   margin: 0 5px 5px 0;
 }
 
-.meal:hover {
-  opacity: 0.5;
+.meal > h3{
+opacity: 0;
+}
+
+.meal:hover .meal-info{
+  color: white;
+  opacity: 1;
 }

@@ -15,7 +15,7 @@ function searchMeal(event) {
       .then((res) => res.json())
       .then((data) => {
         resultHeading.innerHTML = `<h2>Search results for '${element}':</h2>`;
-
+        console.log(data)
         if (data.meals === null) {
           resultHeading.innerHTML = `<h2>There are no search results. Try again!</h2>`;
         } else {

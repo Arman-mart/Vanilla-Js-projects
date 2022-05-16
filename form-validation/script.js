@@ -1,62 +1,127 @@
-const form = document.getElementById("form");
-const email = document.getElementById("email");
-const userName = document.getElementById("username");
-const password = document.getElementById("password");
-const confirmPassword = document.getElementById("confirm-password");
-const submitBtn = document.getElementById("submit");
+const form = document.getElementById("registration-form");
 
-const setError = (input, message) => {
-  const formControl = input.parentElement;
-  const errorMessageBox = formControl.querySelector("span");
-  formControl.className = "form-control error";
-  errorMessageBox.innerText = message;
+const DEFAULTS = {
+  patterns: {
+    emailReg:/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    passwordReg: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
+  },
+  minLength: 0,
+  maxLength: 300,
 };
 
-const setSuccess = (input) => {
-  const formControl = input.parentElement;
-  formControl.className = "form-control success";
+const checkEmail = (input) => {
+  if (DEFAULTS.patterns.emailReg.test(input)) {
+    return null;
+  }
+  return `Email is not Valid`;
 };
 
-const checkEmail = (email) => {
-  const emailFilter =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return emailFilter.test(email);
+const checkPassword = (input) => {
+  if (DEFAULTS.patterns.passwordReg.test(input)) {
+    return null;
+  }
+  return `Minimum six characters, at least one letter and one number`;
 };
 
-const checkInputs = () => {
-  const usernameValue = userName.value.trim();
-  const emailValue = email.value.trim();
-  const passwordValue = password.value.trim();
-  const confirmPasswordValue = confirmPassword.value.trim();
+const checkPasswordsMatch = (confirmPassword, formValue) => {
+  if (confirmPassword !== formValue.password) {
+    return `Paswords does not match`;
+  }
+  return null;
+};
 
-  if (usernameValue === "" || usernameValue.length < 3) {
-    setError(userName, "Username must be at least 3 characters");
-  } else {
-    setSuccess(userName);
+const trimElementValue = (element) => {
+  return element.value.trim();
+};
+
+const checkLength = (
+  input,
+  min = DEFAULTS.minLength,
+  max = DEFAULTS.maxLength
+) => {
+  if (input.length <= min) {
+    return `Text length must be more then ${min} symbols`;
   }
 
-  if (checkEmail(emailValue)) {
-    setSuccess(email);
-  } else {
-    setError(email, "Email is not valid");
+  if (input.length > max) {
+    return `The max length of text is ${max}`;
   }
 
-  if (passwordValue.length < 6) {
-    setError(password, "Password must be at least 6 characters");
-  } else {
-    setSuccess(password);
+  return null;
+};
+
+const required = (value) => {
+  if (value) {
+    return null;
   }
 
-  if (confirmPasswordValue === "") {
-    setError(confirmPassword, "Password confirmation is required");
-  } else if (passwordValue !== confirmPasswordValue) {
-    setError(confirmPassword, "Passwords does not match");
-  } else {
-    setSuccess(confirmPassword);
+  return "The value is required";
+};
+
+const REGISTER_VALIDATION = {
+  username: [required, (value) => checkLength(value, 3, 20)],
+  email: [required, checkEmail],
+  password: [required, checkPassword],
+  confirmPassword: [
+    required,
+    checkPasswordsMatch,
+  ],
+};
+
+const getFormFields = (elements = []) => {
+  const result = {};
+  for (const item of elements) {
+    if (item.name) {
+      result[item.name] = trimElementValue(item);
+    }
+  }
+  return result;
+};
+
+const validateLoginForm = (formFields, validationConfig) => {
+  const result = {};
+  Object.keys(formFields).forEach((key) => {
+    const value = formFields[key];
+    const validations = validationConfig[key];
+
+    if (validations?.length) {
+      for (const validationFn of validations) {
+        const valResult = validationFn(value, formFields);
+
+        if (valResult) {
+          result[key] = valResult;
+          break;
+        }
+      }
+    }
+  });
+
+  return result;
+};
+
+const toEmptyErrorBoxes = () => {
+  const messageInputs = document.getElementsByClassName("validation-message");
+  
+  for (const input of messageInputs) {
+    input.innerText = '';
   }
 };
 
-form.addEventListener("submit", (event) => {
+const showValidation = (validationResult) => {
+  const resultKeys = Object.keys(validationResult);
+  for (const key of resultKeys) {
+    const element = document.getElementById(key);
+    element.parentElement
+      .querySelector('.validation-message').innerText = validationResult[key];
+  }
+};
+
+function handleSubmit(event) {
   event.preventDefault();
-  checkInputs();
-});
+  const fieldModel = getFormFields(event.target.elements);
+  const validationResult = validateLoginForm(fieldModel, REGISTER_VALIDATION);
+  toEmptyErrorBoxes();
+  showValidation(validationResult);
+}
+
+form.addEventListener("submit", handleSubmit);
