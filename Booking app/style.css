@@ -19,6 +19,19 @@
     margin: 20px 0;
 }
 
+.movie-container > select{
+    background-color: #fff;
+    border: 0;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-left: 10px;
+    padding: 5px 15px 5px 15px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+
 
 .info{
     background: rgba(0, 0, 0, 0.1);
@@ -80,4 +93,9 @@
     align-items: center;
     justify-content: center;
     margin: 0 10px;
+}
+
+#count,
+#total{
+    color:aqua;
 }
