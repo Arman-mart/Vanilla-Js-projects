@@ -3,7 +3,8 @@ const seats = document.querySelectorAll(".seat:not(.info-seat)");
 const count = document.getElementById("count");
 const total = document.getElementById("total");
 const movie = document.getElementById("movie");
-console.log(movie);
+
+
 const movieData = {
   movies: {
     "Avengers:Endgame": {
@@ -30,31 +31,32 @@ const movieData = {
 };
 
 const getSeatsInfo = (seats = [], movieData = {}, movieName = "") => {
-  console.log(seats);
-  const data = Object.values(movieData);
+  const selectedSeatsArray =  movieData.movies[movieName].selectedSeatsId;
+  const occupiedSeatsArray = movieData.movies[movieName].occupiedSeatsId;
   seats.forEach((seat, idx) => {
     if (
       seat.classList.contains("selected") &&
-      !data[0][movieName].selectedSeatsId.includes(idx)
+      !selectedSeatsArray.includes(idx)
     ) {
-      data[0][movieName].selectedSeatsId.push(idx);
+      selectedSeatsArray.push(idx);
     } else if (
       seat.classList.contains("occupied") &&
-      !data[0][movieName].occupiedSeatsId.includes(idx)
+      !occupiedSeatsArray.includes(idx)
     ) {
-      data[0][movieName].occupiedSeatsId.push(idx);
+      occupiedSeatsArray.push(idx);
     } else {
-      data[0][movieName].selectedSeatsId.splice(idx);
+      selectedSeatsArray.splice(idx);
     }
   });
-  console.log(data[0][movieName].selectedSeatsId);
 };
 
 const updateSeatsInfo = (movieData, movieName) => {
-  movieData.movies[movieName].selectedSeatsId.forEach((el) => {
+  const selectedSeatsArray =  movieData.movies[movieName].selectedSeatsId;
+  const occupiedSeatsArray = movieData.movies[movieName].occupiedSeatsId;
+  selectedSeatsArray.forEach((el) => {
     seats[el].classList.add("selected");
   });
-  movieData.movies[movieName].occupiedSeatsId.forEach((el) => {
+  occupiedSeatsArray.forEach((el) => {
     seats[el].classList.add("occupied");
   });
 };
@@ -78,8 +80,6 @@ movie.addEventListener("change", (e) => {
   updateSeatsInfo(movieData, movieName);
 });
 
-
-
 container.addEventListener("click", (event) => {
   if (
     event.target.classList.contains("seat") &&
@@ -87,5 +87,6 @@ container.addEventListener("click", (event) => {
   ) {
     event.target.classList.toggle("selected");
   }
-  getSeatsInfo(seats, movieData, movie.options[movie.selectedIndex].text);
+  const movieName = movie.options[movie.selectedIndex].text
+  getSeatsInfo(seats, movieData, movieName);
 });
