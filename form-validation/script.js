@@ -119,6 +119,7 @@ const showValidation = (validationResult) => {
 function handleSubmit(event) {
   event.preventDefault();
   const fieldModel = getFormFields(event.target.elements);
+  console.log(event.target.elements)
   const validationResult = validateLoginForm(fieldModel, REGISTER_VALIDATION);
   toEmptyErrorBoxes();
   showValidation(validationResult);

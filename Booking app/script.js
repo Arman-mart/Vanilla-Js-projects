@@ -30,6 +30,10 @@ const movieData = {
   },
 };
 
+function saveState(){
+  localStorage
+}
+
 const getSeatsInfo = (seats = [], movieData = {}, movieName = "") => {
   const selectedSeatsArray = movieData.movies[movieName].selectedSeats;
   const occupiedSeatsArray = movieData.movies[movieName].occupiedSeats;
@@ -99,9 +103,8 @@ container.addEventListener("click", (event) => {
     event.target.classList.toggle("selected");
   }
 
-  if( movieName !== "Choose here"){
+  if (movieName !== "Choose here") {
     getSeatsInfo(seats, movieData, movieName);
     updateTotalandCount(movieData, movieName);
   }
- 
 });
