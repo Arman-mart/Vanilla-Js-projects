@@ -7,7 +7,7 @@ const moviePrice = document.getElementById("movie-price");
 
 const movieData = {
   movies: {
-    "Avengers:Endgame": {
+    "Avengers:Endgame": { 
       price: 8,
       occupiedSeats: [8, 7, 6, 0, 13, 14, 15],
       selectedSeats: [],
