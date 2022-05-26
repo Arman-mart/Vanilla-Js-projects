@@ -12,7 +12,7 @@ const movieData = {
       occupiedSeats: [8, 7, 6, 0, 13, 14, 15],
       selectedSeats: [],
     },
-    Joker: {
+    "Joker": {
       price: 12,
       occupiedSeats: [9, 8, 7],
       selectedSeats: [],
