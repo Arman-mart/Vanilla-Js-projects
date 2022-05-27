@@ -13,8 +13,8 @@
         <div class="booking-app">
             <div class="movie-container">
                 <label>Pick a movie:</label>
-                <select name="" id="movie">
-                    <option value="" selected  hidden>Choose here</option>
+                <select name="" id="movies">
+                    
                 </select>
                 <span id="movie-price"></span>
             </div>
@@ -33,76 +33,14 @@
                     <span>Occupied</span>
                 </li>
             </ul>
-
-            <div class="container">
+            <div class="container" id="container">
                 <div class="screen"></div>
-                <div class="row">
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                </div>
-                <div class="row">
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                </div>
-                <div class="row">
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                </div>
-                <div class="row">
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                </div>
-                <div class="row">
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                </div>
-                <div class="row">
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                    <div class="seat"></div>
-                </div>
+                <div class="row" id="seat-container"></div>
             </div>
-            <p class="text">
-                You have selected: <span id="count"></span>
-                Seat for a price of <span id="total"></span>$
-            </p>
-        </div>
-    </div>
-    <script src="script.js"></script>
+
+            
+
+    <script type ="module" src="./main.js"></script>
+    <script type = "module" src="./construcor.js"></script>
 </body>
 </html>
