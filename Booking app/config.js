@@ -5,7 +5,7 @@ export const cinemaState = {
         name: `Avengers: Endgame ($10)`,
         price: 10,
         seats: {
-          count: 48,
+          count: 20,
           occupiedSeats: [4, 5, 6, 7],
           selectedSeats: [],
         },

@@ -5,60 +5,70 @@ const seatContainer = document.getElementById("seat-container");
 const moviesSelect = document.getElementById("movies");
 const state = JSON.parse(localStorage.getItem("movieState") || null);
 
-
 function initSeats() {
+  const occupiedSeatsArray =
+        cinemaState.currentMovieState.seats.occupiedSeats;
+        const selectedSeatsArray =
+        cinemaState.currentMovieState.seats.selectedSeats;
   const factory = new ElementFactory();
   new Array(cinemaState.currentMovieState.seats.count)
     .fill(0)
     .map((el, idx) => {
       const initSeat = factory.create("div", "div", "seat");
-      const div = initSeat.rend(seatContainer);
-      console.log(div);
-      const occupiedSeatsArray = cinemaState.currentMovieState.seats.occupiedSeats;
+      el = initSeat.rend(seatContainer);
+      selectedSeatsArray.push(idx)
       if (occupiedSeatsArray.includes(idx)) {
-        div.classList.add("occupied");
+        el.classList.add("occupied");
       }
     });
 }
 
 function initSelectOptions() {
   const factory = new ElementFactory();
-  cinemaState.movies.map((option) => {
-    let initOption = factory.create("option", "option", option.price);
+  cinemaState.movies.map((option, idx) => {
+    let initOption = factory.create("option", "option", idx);
     initOption.rend(movies, option.name);
   });
 }
 
-// function changeMovie(e) {
-//   cinemaState.currentMovie = e.target.value;
-//   const seats = document.querySelectorAll(".seat:not(.info-seat)");
-//   Array.from(seats).map((seat) => {
-//     seat.parentElement.removeChild(seat);
-//   });
-//   initSeats();
-// }
+function changeMovie(e) {
+  cinemaState.currentMovie = e.target.value;
+  const seats = document.querySelectorAll(".seat:not(.info-seat)");
+  Array.from(seats).map((seat) => {
+    seat.parentElement.removeChild(seat);
+  });
+  initSeats();
+}
+
+function chooseSeat(event) {
+  console.log(event.target.dataset)
+  if (
+    event.target.classList.contains("seat") &&
+    !event.target.classList.contains("occupied")
+  ) {
+    event.target.classList.toggle("selected");
+    cinemaState.currentMovieState.seats.selectedSeats.push(event.target);
+  }else{
+   cinemaState.currentMovieState.seats.selectedSeats.filter(el => el !== id);
+  }
+}
+
+seatContainer.addEventListener("click", (event) => {
+  chooseSeat(event);
+});
 
 function main(state, moviesSelect, seatContainer) {
-  if (state) {
-    cinemaState.currentMovie = state.currentMovie;
-    cinemaState.movies = cinemaState.movies.map(
-      ({ seats, ...rest }, index) => ({
-        ...rest,
-        seats: state.movies[index].seats,
-      })
-    );
-  }
+  // if (state) {
+  //   cinemaState.currentMovie = state.currentMovie;
+  //   cinemaState.movies = cinemaState.movies.map(
+  //     ({ seats, ...rest }, index) => ({
+  //       ...rest,
+  //       seats: state.movies[index].seats,
+  //     })
+  //   );
+  // }
 
-  function selectItem(ev, element) {
-    ev.preventDefault();
-    element.toggleClass("selected");
-  }
-
-  Array.from(seatContainer.childNodes).forEach((element) => {
-    element.on("click", selectItem);
-  });
-
-  // movies.addEventListener("change", changeMovie);
+  movies.addEventListener("change", changeMovie);
   initSelectOptions();
   initSeats();
 }
