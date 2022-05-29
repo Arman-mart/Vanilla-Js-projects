@@ -41,16 +41,17 @@ function changeMovie(e) {
 }
 
 function chooseSeat(event) {
-  console.log(event.target.dataset)
   if (
     event.target.classList.contains("seat") &&
     !event.target.classList.contains("occupied")
   ) {
     event.target.classList.toggle("selected");
+    console.log(event.target)
     cinemaState.currentMovieState.seats.selectedSeats.push(event.target);
-  }else{
-   cinemaState.currentMovieState.seats.selectedSeats.filter(el => el !== id);
   }
+  //else{
+  //  cinemaState.currentMovieState.seats.selectedSeats.filter(el => el !== id);
+  // }
 }
 
 seatContainer.addEventListener("click", (event) => {
