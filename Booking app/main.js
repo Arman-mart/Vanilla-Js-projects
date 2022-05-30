@@ -36,7 +36,11 @@ function initSeats() {
 
 function initSelectOptions() {
   cinemaState.movies.map((option, idx) => {
-    let initOption = factory.create("option", { value: idx }, [option.name]);
+    const initOption = factory.create(
+        "option",
+        { value: idx },
+        [option.name]
+    );
     movies.appendChild(initOption.rend());
   });
 }

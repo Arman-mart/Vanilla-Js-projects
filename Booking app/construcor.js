@@ -11,13 +11,13 @@ class Element {
 
     this.children.forEach(item => {
       let result;
-      if (item.instanceOf(Element)) {
+      if (item instanceof Element) {
         result = item.rend();
       } else {
         result = item;
       }
-
-      element.appendChild(result);
+      
+      element.innerText = result;
     });
   }
 }
@@ -40,7 +40,7 @@ class Element {
   }
 }
 
-class Option {
+class Option extends Element {
   constructor({ className, value }, children) {
     super(children, className);
     this.value = value;
@@ -49,7 +49,6 @@ class Option {
   rend() {
     const option = document.createElement("option");
     option.value = this.value;
-    
     super.rend(option);
     return option;
   }
