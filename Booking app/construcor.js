@@ -1,28 +1,56 @@
- class Div {
-  constructor(name, className) {
-    this.name = name;
-    this.className = className;
+class Element {
+  constructor(children, className) {
+  this.children = children;
+  this.className = className;
   }
 
-  rend(parrent) {
+  rend(element) {
+    if (this.className) {
+      element.classList.add(this.className);
+    }
+
+    this.children.forEach(item => {
+      let result;
+      if (item.instanceOf(Element)) {
+        result = item.rend();
+      } else {
+        result = item;
+      }
+
+      element.appendChild(result);
+    });
+  }
+}
+ 
+ class Div extends Element {
+  constructor({ className, onclick }, children) {
+    super(children, className);
+    this.onclick = onclick;
+  }
+
+  rend() {
     const div = document.createElement("div");
-    div.classList.add(this.className);
-    parrent.appendChild(div);
+
+    if (this.onclick) {
+      div.addEventListener('click', this.onclick);
+    }
+
+    super.rend(div);
     return div
   }
 }
 
 class Option {
-  constructor(name, value) {
-    this.name = name;
+  constructor({ className, value }, children) {
+    super(children, className);
     this.value = value;
   }
 
-  rend(parrent,name) {
+  rend() {
     const option = document.createElement("option");
     option.value = this.value;
-    option.innerText = name
-    parrent.appendChild(option)
+    
+    super.rend(option);
     return option;
   }
 }
@@ -33,28 +61,10 @@ export class ElementFactory {
     option: Option,
   };
 
-  create(name, type = "div", className = "seat") {
+  create(type, params, children = []) {
     const Element = ElementFactory.list[type];
-    const elem = new Element(name, className);
+    const elem = new Element(params, children);
     return elem;
   }
-
-  // on(eventName, callback) {
-  //   return this.element.addEventListener(eventName, function (ev) {
-  //     return callback(ev, this);
-  //   });
-  // }
-
-  // addClass(className) {
-  //   this.classList.add(className);
-  // }
-
-  // removeClass(className) {
-  //   this.classList.remove(className);
-  // }
-
-  // toggleClass(className) {
-  //   this.classList.toggle(className);
-  // }
 }
 
