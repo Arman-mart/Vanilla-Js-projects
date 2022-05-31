@@ -9,20 +9,18 @@ const moviesSelect = document.getElementById("movies");
 const total = document.getElementById("total");
 const count = document.getElementById("count");
 
-
 const state = JSON.parse(localStorage.getItem("movieState") || null);
 
 const factory = new ElementFactory();
-let selectedSeatsArray;
-let occupiedSeatsArray;
+
 
 function saveState() {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cinemaState));
 }
 
 function initSeats() {
-   occupiedSeatsArray = cinemaState.currentMovieState.seats.occupiedSeats;
-   selectedSeatsArray = cinemaState.currentMovieState.seats.selectedSeats;
+  const occupiedSeatsArray = cinemaState.currentMovieState.seats.occupiedSeats;
+  const selectedSeatsArray = cinemaState.currentMovieState.seats.selectedSeats;
 
   seatContainer.innerHTML = "";
 
@@ -69,9 +67,9 @@ function chooseSet(seat) {
   if (!seat.classList.contains(occupiedClass)) {
     if (seat.classList.contains(selectedClass)) {
       seat.classList.remove(selectedClass);
-      cinemaState.currentMovieState.seats.selectedSeats.filter(
-        (el) => el !== seat.id
-      );
+      console.log(seat.id)
+      cinemaState.currentMovieState.seats.selectedSeats = cinemaState.currentMovieState.seats.selectedSeats.filter(el => el !== +seat.id);
+       console.log(cinemaState.currentMovieState.seats.selectedSeats)
     } else {
       seat.classList.add(selectedClass);
       cinemaState.currentMovieState.seats.selectedSeats.push(+seat.id);
@@ -86,14 +84,18 @@ function selectSeat(e, seat) {
   updateTotal();
 }
 
-function updateTotal(){
-    const selectedCount = selectedSeatsArray.length;
-    const price = cinemaState.currentMovieState.price;
-    count.innerText = `${selectedCount}`;
-    total.innerText = ` ${price * selectedCount}$`
+function updateTotal() {
+  const selectedSeatsArray = cinemaState.currentMovieState.seats.selectedSeats;
+  const {
+    currentMovieState: {
+      price,
+    },
+  } = cinemaState;
+  total.innerText = `${price * selectedSeatsArray.length}$`;
+  count.innerText = `${selectedSeatsArray.length}`;
 }
 
-function main(state, moviesSelect, seatContainer) {
+function main(state, moviesSelect) {
   if (state) {
     cinemaState.movies = cinemaState.movies.map(
       ({ seats, ...rest }, index) => ({
@@ -101,16 +103,14 @@ function main(state, moviesSelect, seatContainer) {
         seats: state.movies[index].seats,
       })
     );
-     cinemaState.currentMovie = state.currentMovie || 0;
+    cinemaState.currentMovie = state.currentMovie || 0;
   }
 
   movies.addEventListener("change", changeMovie);
   initSelectOptions();
   initSeats();
-  saveState();
   updateTotal();
   moviesSelect.value = state.currentMovie;
 }
 
-
-main(state, moviesSelect, seatContainer);
+main(state, moviesSelect);
