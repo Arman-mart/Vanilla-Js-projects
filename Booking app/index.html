@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,8 +14,8 @@
         <div class="booking-app">
             <div class="movie-container">
                 <label>Pick a movie:</label>
-                <select name="" id="movies">
-                    
+                <select  id="movies">
+
                 </select>
                 <span id="movie-price"></span>
             </div>
@@ -22,7 +23,7 @@
             <ul class="info">
                 <li>
                     <div class="seat info-seat"></div>
-                    <span>N/A</span> 
+                    <span>N/A</span>
                 </li>
                 <li>
                     <div class="seat selected info-seat"></div>
@@ -37,9 +38,21 @@
                 <div class="screen"></div>
                 <div class="row" id="seat-container"></div>
             </div>
+            <p>
+                You have selected
+                    <span id="count"></span>
+                seats
+                for a price of 
+                <span id="total"></span>
+            </p>
+           
 
-            
 
-    <script type ="module" src="./main.js"></script>
+        </div>
+    </div>
+
+
+    <script type="module" src="./main.js"></script>
 </body>
+
 </html>

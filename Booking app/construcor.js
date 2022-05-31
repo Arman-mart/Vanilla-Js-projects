@@ -16,8 +16,7 @@ class Element {
       } else {
         result = item;
       }
-      
-      element.innerText = result;
+      element.innerHTML = result;
     });
   }
 }

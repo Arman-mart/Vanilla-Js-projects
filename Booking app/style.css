@@ -96,6 +96,10 @@ width: 150px;
   margin: 0 10px;
 }
 
+p{
+  color: rgb(192, 192, 192);
+}
+
 #count,
 #total {
   color: aqua;
