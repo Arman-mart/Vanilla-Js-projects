@@ -67,9 +67,7 @@ function chooseSet(seat) {
   if (!seat.classList.contains(occupiedClass)) {
     if (seat.classList.contains(selectedClass)) {
       seat.classList.remove(selectedClass);
-      console.log(seat.id)
       cinemaState.currentMovieState.seats.selectedSeats = cinemaState.currentMovieState.seats.selectedSeats.filter(el => el !== +seat.id);
-       console.log(cinemaState.currentMovieState.seats.selectedSeats)
     } else {
       seat.classList.add(selectedClass);
       cinemaState.currentMovieState.seats.selectedSeats.push(+seat.id);
