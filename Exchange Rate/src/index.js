@@ -11,7 +11,8 @@ const createOptions = async (url) => {
         const response = await fetch(url);
         const data = await response.json();
         const { conversion_rates } = data;
-        Object.entries(conversion_rates).forEach(([key, val]) => {
+        Object.entries(conversion_rates)
+            .forEach(([key]) => {
             const optionForFirst = new Option(key, key);
             const optionForSeCond = new Option(key, key);
             firstCurrency?.add(optionForFirst);
@@ -30,21 +31,17 @@ const convert = async () => {
         const response = await fetch(url);
         const data = await response.json();
         const { conversion_rate } = data;
-        if (rate && amountOne && amountTwo) {
-            const convertedValue = (conversion_rate * +amountOne.value).toFixed(2);
-            rate.innerText = `${amountOne.value} ${baseUnit} = ${convertedValue} ${secondUnit}`;
-            amountTwo.value = convertedValue;
-        }
+        const convertedValue = (conversion_rate * +amountOne.value).toFixed(2);
+        rate.innerText = `${amountOne.value} ${baseUnit} = ${convertedValue} ${secondUnit}`;
+        amountTwo.value = convertedValue;
     }
     catch (error) {
         console.log("error: ", error);
     }
 };
 const swapCurrency = () => {
-    if (firstCurrency && secondCurrency && rate) {
-        [firstCurrency.value, secondCurrency.value] = [secondCurrency.value, firstCurrency.value];
-        [amountOne.value, amountTwo.value] = [amountTwo.value, amountOne.value];
-    }
+    [firstCurrency.value, secondCurrency.value] = [secondCurrency.value, firstCurrency.value];
+    [amountOne.value, amountTwo.value] = [amountTwo.value, amountOne.value];
 };
 amountOne?.addEventListener("input", convert);
 firstCurrency?.addEventListener("change", convert);
